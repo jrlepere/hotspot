@@ -4,7 +4,7 @@ import com.jrlepere.hotspot.*;
 
 public aspect MethodCallWeave {
 	
-	private static final MethodCallHandler METHOD_CALL_HANDLER = new MethodCallHandler();
+	private static final IMethodCallAspectInterface METHOD_CALL_HANDLER = new PrintMethodCallAspectInterface();
 	
 	pointcut traceMethods():
 		execution(* *(..)) && !cflow(within(MethodCallWeave));
