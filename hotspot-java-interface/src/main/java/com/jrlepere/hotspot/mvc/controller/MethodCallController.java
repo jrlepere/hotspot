@@ -1,21 +1,24 @@
 package com.jrlepere.hotspot.mvc.controller;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import com.jrlepere.hotspot.mvc.controller.id_mapper.IMethodCallIdMapper;
+import com.jrlepere.hotspot.mvc.controller.id_mapper.IncrementalMethodCallIdMapper;
 import com.jrlepere.hotspot.mvc.model.MethodCall;
 import com.jrlepere.hotspot.mvc.view.IMethodCallEventHandler;
-import com.jrlepere.hotspot.mvc.controller.MethodCallEvent;
 
 public class MethodCallController {
 
 	private MethodCall methodCall;
-	private Map<MethodCallEvent, List<IMethodCallEventHandler>> methodCallEventHandlers;
 	private IMethodCallIdMapper methodCallIdMapper;
+	private Map<MethodCallEvent, List<IMethodCallEventHandler>> methodCallEventHandlers;
 	
 	public MethodCallController() {
+		methodCallIdMapper = new IncrementalMethodCallIdMapper();
+		methodCallEventHandlers = new HashMap<>();
 	}
 	
 	public void addListener(MethodCallEvent event, IMethodCallEventHandler handler) {
@@ -38,7 +41,7 @@ public class MethodCallController {
 		return methodCall;
 	}
 	
-	public int getMethodCallId() {
+	public String getMethodCallId() {
 		return methodCallIdMapper.getId(methodCall);
 	}
 	
@@ -49,7 +52,7 @@ public class MethodCallController {
 	private void notifyListeners(MethodCallEvent event) {
 		if (methodCallEventHandlers.containsKey(event)) {
 			for (IMethodCallEventHandler handler : methodCallEventHandlers.get(event)) {
-				handler.notify();
+				handler.alert();
 			}
 		}
 	}

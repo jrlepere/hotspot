@@ -34,7 +34,7 @@
     <dependency>
       <groupId>com.jrlepere</groupId>
       <artifactId>hotspot</artifactId>
-      <version>0.0.0-SNAPSHOT</version>
+      <version>0.0.0-SNAPSHOT-jar-with-dependencies</version>
     </dependency>
   </dependencies>
 </project>
