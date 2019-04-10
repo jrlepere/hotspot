@@ -10,13 +10,7 @@ public aspect MethodCallWeave {
 		execution(* *(..)) && !cflow(within(MethodCallWeave));
 	
 	before(): traceMethods() {
-		METHOD_CALL_HANDLER.handleMethodCallStart(thisJoinPointStaticPart,
-				System.currentTimeMillis());
-	}
-	
-	after(): traceMethods() {
-		METHOD_CALL_HANDLER.handleMethodCallEnd(thisJoinPointStaticPart,
-				System.currentTimeMillis());
+		METHOD_CALL_HANDLER.handleMethodCall(thisJoinPointStaticPart);
 	}
 	
 }
