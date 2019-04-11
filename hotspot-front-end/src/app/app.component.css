@@ -1,0 +1,21 @@
+h1 {
+    font-size: xx-large;
+    color: #f74c4c;
+    margin-bottom: 0;
+    
+}
+nav a {
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #f74c4c;
+    border-radius: 4px;
+}
+nav a:visited, a:link {
+    color: #edeaea;
+}
+nav a:hover {
+    color: #edeaea;
+    background-color: #f40404
+}

@@ -1,0 +1,9 @@
+li {
+    position: relative;
+    cursor: pointer;
+    background-color: #dbb6b6;
+    padding: .3em 0;
+}
+li:nth-child(odd) {
+    background-color: #e8a2a2;
+}

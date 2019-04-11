@@ -15,47 +15,51 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jrlepere.hotspot_back_end_interface.Method;
+import com.jrlepere.hotspot_back_end_interface.MethodCallNotification;
 
 @RestController
 public class AppController {
 	
-	private Map<String, Method> idMethodMap = new HashMap<>();
-	private List<String> methodCallLog = new LinkedList<>();
-	private Map<String, Integer> methodCallCounter = new HashMap<>();
+	private Map<String, IdMethodMap> idMethodMapPerProject = new HashMap<>();
+	private Map<String, List<String>> methodCallLogPerProject = new HashMap<>();
 	private IdGenerator idGenerator = new IdGenerator();
 	
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<String> register(@RequestBody Method method) {
-		System.out.println(method);
-		String id = idGenerator.generateUniqueId();
-		idMethodMap.put(id, method);
-		methodCallCounter.put(id, 0);
-		return new ResponseEntity<String>(id, HttpStatus.OK);
+	@RequestMapping(value = "/register-project", method = RequestMethod.GET)
+	public ResponseEntity<String> registerProject() {
+		String projectId = idGenerator.generateUniqueProjectId();
+		idMethodMapPerProject.put(projectId, new IdMethodMap());
+		methodCallLogPerProject.put(projectId, new LinkedList<>());
+		return new ResponseEntity<String>(projectId, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/notify", method = RequestMethod.POST)
-	public void notify(@RequestParam("id") String methodId) {
-		System.out.println(methodId);
-		methodCallLog.add(methodId);
-		methodCallCounter.put(methodId, methodCallCounter.get(methodId) + 1);
+	@RequestMapping(value = "/notify-method-call", method = RequestMethod.POST)
+	public void notifyMethodCall(@RequestBody MethodCallNotification methodCallNotification) {
+		Method method = methodCallNotification.getMethod();
+		String projectId = methodCallNotification.getProjectId();
+		IdMethodMap idMethodMap = idMethodMapPerProject.get(projectId);
+		if (!idMethodMap.containsMethod(method)) {
+			idMethodMap.put(method, idGenerator.generateUniqueMethodId(projectId));
+		}
+		methodCallLogPerProject.get(projectId).add(idMethodMap.getId(method));
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/method-call-log", method = RequestMethod.GET)
-	public ResponseEntity<List<String>> getMethodCallLog() {
-		return new ResponseEntity<List<String>>(methodCallLog, HttpStatus.OK);
+	public ResponseEntity<List<String>> getMethodCallLog(@RequestParam String projectId) {
+		return new ResponseEntity<List<String>>(methodCallLogPerProject.get(projectId), HttpStatus.OK);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/id-method-map", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Method>> getIdMethodMap() {
-		return new ResponseEntity<Map<String, Method>>(idMethodMap, HttpStatus.OK);
+	public ResponseEntity<Map<String, Method>> getIdMethodMap(@RequestParam String projectId) {
+		return new ResponseEntity<Map<String, Method>>(
+				idMethodMapPerProject.get(projectId).getIdToMethodMap(), HttpStatus.OK);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/method-call-counter", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Integer>> getMethodCallCounter() {
-		return new ResponseEntity<Map<String, Integer>>(methodCallCounter, HttpStatus.OK);
+	public ResponseEntity<Map<String, Integer>> getMethodCallCounter(@RequestParam String projectId) {
+		return new ResponseEntity<Map<String, Integer>>(new HashMap<>(), HttpStatus.OK);
 	}
 	
 }

@@ -6,8 +6,7 @@ public class Method {
 
 	private Map<String, Object> info;
 
-	public Method() {
-	}
+	public Method() {}
 
 	public Method(Map<String, Object> info) {
 		this.info = info;
@@ -32,7 +31,7 @@ public class Method {
 	public boolean equals(Object o) {
 		return (this == o) || ((o != null) && (getClass() == o.getClass()) && info.equals(((Method) o).info));
 	}
-	
+
 	public int hashCode() {
 		return info.hashCode();
 	}
