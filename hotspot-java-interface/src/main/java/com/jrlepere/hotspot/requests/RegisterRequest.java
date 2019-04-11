@@ -18,11 +18,9 @@ public class RegisterRequest {
 		HttpPost post = new HttpPost(String.format(RELATIVE_PATH, url));
 		try {
 			post.setEntity(new StringEntity(gson.toJson(method)));
-			System.out.println(gson.toJson(method));
 			post.setHeader("Content-type", "application/json");
 			HttpResponse response = httpClient.execute(post);
 			String id = EntityUtils.toString(response.getEntity(), "UTF-8");
-			System.out.println(id);
 			post.releaseConnection();
 			return id;
 		} catch (Exception e) {

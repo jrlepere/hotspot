@@ -1,13 +1,16 @@
 package com.jrlepere.hotspot_test;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+public class App {
+	
+	public static String echo(String message) {
+		return message;
+	}
+	
+	public static String echo2(String message) {
+		return message + message;
+	}
+	
+    public static void main(String[] args) {
+        echo2(echo(echo2(echo("Hello"))));
     }
 }
