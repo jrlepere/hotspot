@@ -17,4 +17,8 @@ export class AppComponent {
         this.hotspotService.setProjectId(this.projectId);
         this.hotspotService.isValidProjectId().subscribe(res => this.isValidProjectId = res);
     }
+    
+    refresh() {
+        window.location.reload();
+    }
 }

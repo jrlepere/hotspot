@@ -1,9 +1,12 @@
 package com.jrlepere.hotspot_back_end;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +22,11 @@ import com.jrlepere.hotspot_back_end_interface.MethodCallNotification;
 
 @RestController
 public class AppController {
-	
+
 	private Map<String, IdMethodMap> idMethodMapPerProject = new HashMap<>();
-	private Map<String, List<String>> methodCallLogPerProject = new HashMap<>();
+	private Map<String, Queue<String>> methodCallLogPerProject = new HashMap<>();
 	private IdGenerator idGenerator = new IdGenerator();
-	
+
 	@RequestMapping(value = "/register-project", method = RequestMethod.GET)
 	public ResponseEntity<String> registerProject() {
 		String projectId = idGenerator.generateUniqueProjectId();
@@ -31,7 +34,7 @@ public class AppController {
 		methodCallLogPerProject.put(projectId, new LinkedList<>());
 		return new ResponseEntity<String>(projectId, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/notify-method-call", method = RequestMethod.POST)
 	public void notifyMethodCall(@RequestBody MethodCallNotification methodCallNotification) {
 		Method method = methodCallNotification.getMethod();
@@ -42,30 +45,50 @@ public class AppController {
 		}
 		methodCallLogPerProject.get(projectId).add(idMethodMap.getId(method));
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/is-valid-project-id", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> isValidProjectId(@RequestParam String projectId) {
 		return new ResponseEntity<Boolean>(idMethodMapPerProject.containsKey(projectId), HttpStatus.OK);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/method-call-log", method = RequestMethod.GET)
-	public ResponseEntity<List<String>> getMethodCallLog(@RequestParam String projectId) {
-		return new ResponseEntity<List<String>>(methodCallLogPerProject.get(projectId), HttpStatus.OK);
+	public ResponseEntity<Queue<String>> getMethodCallLog(@RequestParam String projectId) {
+		return new ResponseEntity<Queue<String>>(methodCallLogPerProject.get(projectId), HttpStatus.OK);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/id-method-map", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Method>> getIdMethodMap(@RequestParam String projectId) {
-		return new ResponseEntity<Map<String, Method>>(
-				idMethodMapPerProject.get(projectId).getIdToMethodMap(), HttpStatus.OK);
+		return new ResponseEntity<Map<String, Method>>(idMethodMapPerProject.get(projectId).getIdToMethodMap(),
+				HttpStatus.OK);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(value = "/method-call-counter", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Integer>> getMethodCallCounter(@RequestParam String projectId) {
-		return new ResponseEntity<Map<String, Integer>>(new HashMap<>(), HttpStatus.OK);
+	@RequestMapping(value = "/method-call-counts", method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, String>>> getMethodCallCounts(@RequestParam String projectId) {
+		Map<String, Integer> methodCounter = new HashMap<>();
+		for (String methodId : methodCallLogPerProject.get(projectId)) {
+			if (!methodCounter.containsKey(methodId)) methodCounter.put(methodId, 0);
+			methodCounter.put(methodId, methodCounter.get(methodId) + 1);
+		}
+		Queue<Map<String, String>> pq = new PriorityQueue<>(new Comparator<Map<String, String>>() {
+			public int compare(Map<String, String> o1, Map<String, String> o2) {
+				return Integer.parseInt(o2.get("frequency")) - Integer.parseInt(o1.get("frequency"));
+			}
+		});
+		for (String methodId : methodCounter.keySet()) {
+			pq.add(new HashMap<String, String>(){{
+				put("methodId", methodId);
+				put("frequency", ""+methodCounter.get(methodId));
+			}});
+		}
+		List<Map<String, String>> res = new LinkedList<>();
+		while (!pq.isEmpty()) {
+			res.add(pq.remove());
+		}
+		return new ResponseEntity<List<Map<String, String>>>(res, HttpStatus.OK);
 	}
-	
+
 }

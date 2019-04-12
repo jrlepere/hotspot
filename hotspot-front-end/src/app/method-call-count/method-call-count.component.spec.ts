@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectIdComponent } from './project-id.component';
+import { MethodCallCountComponent } from './method-call-count.component';
 
-describe('ProjectIdComponent', () => {
-  let component: ProjectIdComponent;
-  let fixture: ComponentFixture<ProjectIdComponent>;
+describe('MethodCallCountComponent', () => {
+  let component: MethodCallCountComponent;
+  let fixture: ComponentFixture<MethodCallCountComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectIdComponent ]
+      declarations: [ MethodCallCountComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProjectIdComponent);
+    fixture = TestBed.createComponent(MethodCallCountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

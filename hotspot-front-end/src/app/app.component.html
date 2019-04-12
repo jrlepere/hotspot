@@ -5,5 +5,6 @@
 <button (click)="loadProjectId()">Load</button>
 <nav *ngIf="isValidProjectId">
     <a routerLink="/log">Log</a>
+    <a routerLink="/call-count">CallCount</a>
 </nav>
 <router-outlet *ngIf="isValidProjectId"></router-outlet>

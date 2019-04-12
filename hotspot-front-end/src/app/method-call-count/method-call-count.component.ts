@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { HotspotService } from '../hotspot.service';
 import { Method } from '../method';
+import { HotspotService } from '../hotspot.service';
 
 @Component({
-    selector: 'app-method-call-log',
-    templateUrl: './method-call-log.component.html',
-    styleUrls: ['./method-call-log.component.css']
+  selector: 'app-method-call-count',
+  templateUrl: './method-call-count.component.html',
+  styleUrls: ['./method-call-count.component.css']
 })
-export class MethodCallLogComponent implements OnInit {
+export class MethodCallCountComponent implements OnInit {
 
     idMethodMap: Map<string, Method>;
-    methodCallLog: string[];
+    methodCallCounts: Map<string, string>[];
     interval: any;
 
     constructor(private hotspotService: HotspotService) { }
@@ -29,8 +29,8 @@ export class MethodCallLogComponent implements OnInit {
     refreshData() {
         this.hotspotService.getIdMethodMap()
             .subscribe(map => this.idMethodMap = map);
-        this.hotspotService.getMethodCallLog()
-            .subscribe(log => this.methodCallLog = log);
+        this.hotspotService.getMethodCallCounts()
+            .subscribe(counts => this.methodCallCounts = counts);
     }
 
 }

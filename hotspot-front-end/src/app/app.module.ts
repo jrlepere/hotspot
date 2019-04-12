@@ -6,13 +6,13 @@ import { AppComponent } from './app.component';
 import { MethodCallLogComponent } from './method-call-log/method-call-log.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { ProjectIdComponent } from './project-id/project-id.component';
+import { MethodCallCountComponent } from './method-call-count/method-call-count.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MethodCallLogComponent,
-    ProjectIdComponent
+    MethodCallCountComponent,
   ],
   imports: [
     BrowserModule,

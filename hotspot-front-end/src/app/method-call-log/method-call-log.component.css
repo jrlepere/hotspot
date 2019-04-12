@@ -1,9 +1,13 @@
+ul {
+    overflow: auto;
+}
+
 li {
     position: relative;
-    cursor: pointer;
-    background-color: #dbb6b6;
-    padding: .3em 0;
+    padding: .3em .3em;
+    list-style-type: none;
 }
+
 li:nth-child(odd) {
-    background-color: #e8a2a2;
+    background-color: lightgray;
 }

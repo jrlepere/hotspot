@@ -44,12 +44,12 @@ export class HotspotService {
                 );
     }
 
-    getMethodCallCounter(): Observable<Map<string, number>> {
-        const url = `${this.rootUrl}/method-call-counter?projectId=${this.projectId}`;
-        return this.httpClient.get<Map<string, number>>(url)
+    getMethodCallCounts(): Observable<Map<string, string>[]> {
+        const url = `${this.rootUrl}/method-call-counts?projectId=${this.projectId}`;
+        return this.httpClient.get<Map<string, string>[]>(url)
                 .pipe(
-                    tap(_ => this.log('fetched method call counter')),
-                    catchError(this.handleError<Map<string, number>>('getMethodCallCounter()'))
+                    tap(_ => this.log('fetched method call counts')),
+                    catchError(this.handleError<Map<string, string>[]>('getMethodCallCounts()'))
                 );
     }
 
