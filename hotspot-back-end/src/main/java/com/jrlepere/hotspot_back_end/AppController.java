@@ -44,6 +44,12 @@ public class AppController {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value = "/is-valid-project-id", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> isValidProjectId(@RequestParam String projectId) {
+		return new ResponseEntity<Boolean>(idMethodMapPerProject.containsKey(projectId), HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/method-call-log", method = RequestMethod.GET)
 	public ResponseEntity<List<String>> getMethodCallLog(@RequestParam String projectId) {
 		return new ResponseEntity<List<String>>(methodCallLogPerProject.get(projectId), HttpStatus.OK);

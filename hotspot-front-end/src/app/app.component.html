@@ -1,6 +1,9 @@
 <h1>{{ title }}</h1>
-<nav>
+<label>projectId:
+    <input [(ngModel)]="projectId" placeholder="project-id" />
+</label>
+<button (click)="loadProjectId()">Load</button>
+<nav *ngIf="isValidProjectId">
     <a routerLink="/log">Log</a>
-    <a routerLink="/count">Count</a>
 </nav>
-<router-outlet></router-outlet>
+<router-outlet *ngIf="isValidProjectId"></router-outlet>

@@ -1,7 +1,0 @@
-<div *ngIf="idMethodMap">
-    <ul *ngIf="methodCallCounter">
-        <li *ngFor="let pair of methodCallCounter | keyvalue">
-            {{idMethodMap[pair.key].info.LongSignature}} -- {{pair.value}}
-        </li>
-    </ul>
-</div>

@@ -13,11 +13,21 @@ import { Method } from './method';
 export class HotspotService {
 
     private rootUrl = 'http://localhost:8080';
+    private projectId = '';
 
     constructor(private httpClient: HttpClient) { }
 
+    isValidProjectId(): Observable<boolean> {
+        const url = `${this.rootUrl}/is-valid-project-id?projectId=${this.projectId}`;
+        return this.httpClient.get<boolean>(url)
+                .pipe(
+                    tap(_ => this.log('valid project id check')),
+                    catchError(this.handleError<boolean>('isValidProjectId()'))
+                );
+    }
+
     getMethodCallLog(): Observable<string[]> {
-        const url = `${this.rootUrl}/method-call-log`;
+        const url = `${this.rootUrl}/method-call-log?projectId=${this.projectId}`;
         return this.httpClient.get<string[]>(url)
                 .pipe(
                     tap(_ => this.log('fetched method call log')),
@@ -26,7 +36,7 @@ export class HotspotService {
     }
 
     getIdMethodMap(): Observable<Map<string, Method>> {
-        const url = `${this.rootUrl}/id-method-map`;
+        const url = `${this.rootUrl}/id-method-map?projectId=${this.projectId}`;
         return this.httpClient.get<Map<string, Method>>(url)
                 .pipe(
                     tap(_ => this.log('fetched id method map')),
@@ -35,12 +45,17 @@ export class HotspotService {
     }
 
     getMethodCallCounter(): Observable<Map<string, number>> {
-        const url = `${this.rootUrl}/method-call-counter`;
+        const url = `${this.rootUrl}/method-call-counter?projectId=${this.projectId}`;
         return this.httpClient.get<Map<string, number>>(url)
                 .pipe(
                     tap(_ => this.log('fetched method call counter')),
                     catchError(this.handleError<Map<string, number>>('getMethodCallCounter()'))
                 );
+    }
+
+    setProjectId(id: string) {
+        this.projectId = id;
+        this.log(this.projectId);
     }
 
     private log(message: string) {
