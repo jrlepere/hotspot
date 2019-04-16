@@ -19,7 +19,7 @@ export class MethodCallLogComponent implements OnInit {
         this.refreshData();
         this.interval = setInterval(() => {
             this.refreshData();
-        }, 5000);
+        }, 500);
     }
 
     ngOnDestroy() {

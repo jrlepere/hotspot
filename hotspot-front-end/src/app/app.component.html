@@ -1,7 +1,5 @@
 <h1>{{ title }}</h1>
-<label>projectId:
-    <input [(ngModel)]="projectId" placeholder="project-id" />
-</label>
+<input [(ngModel)]="projectId" placeholder="project-id" />
 <button (click)="loadProjectId()">Load</button>
 <nav *ngIf="isValidProjectId">
     <a routerLink="/log">Log</a>
