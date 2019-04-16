@@ -5,7 +5,7 @@ import com.jrlepere.hotspot.*;
 public aspect MethodCallWeave {
 	
 	private static final IMethodCallAspectInterface METHOD_CALL_HANDLER =
-			new HotspotMethodCallAspectInterface("daa5d1ce-e3c8-4a5f-8239-d28434b969fc");
+			new HotspotMethodCallAspectInterface("c59ab23b-7380-4ad2-a69e-c77acdc56f7a");
 	
 	pointcut traceMethods():
 		execution(* *(..)) && !cflow(within(MethodCallWeave));

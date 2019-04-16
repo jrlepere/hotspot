@@ -1,7 +1,12 @@
 <div *ngIf="idMethodMap">
-    <ul *ngIf="methodCallCounts">
-        <li *ngFor="let methodCallCount of methodCallCounts">
-            {{methodCallCount["frequency"]}} -- {{idMethodMap[methodCallCount["methodId"]].info.LongSignature}}
-        </li>
-    </ul>
+    <table *ngIf="methodCallCounts">
+        <tr>
+            <th>Frequency</th>
+            <th>Method Signature</th>
+        </tr>
+        <tr *ngFor="let methodCallCount of methodCallCounts">
+            <td>{{methodCallCount["frequency"]}}</td>
+            <td>{{idMethodMap[methodCallCount["methodId"]].info.LongSignature}}</td>
+        </tr>
+    </table>
 </div>

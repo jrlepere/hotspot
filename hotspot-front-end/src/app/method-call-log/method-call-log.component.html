@@ -1,7 +1,10 @@
 <div *ngIf="idMethodMap">
-    <ul *ngIf="methodCallLog">
-        <li *ngFor="let id of methodCallLog">
-            {{idMethodMap[id].info.LongSignature}}
-        </li>
-    </ul>
+    <table *ngIf="methodCallLog">
+        <tr>
+            <th>Method Signature</th>
+        </tr>
+        <tr *ngFor="let id of methodCallLog">
+            <td>{{idMethodMap[id].info.LongSignature}}</td>
+        </tr>
+    </table>
 </div>

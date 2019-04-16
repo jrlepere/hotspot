@@ -1,6 +1,7 @@
 package com.jrlepere.hotspot_back_end;
 
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +25,7 @@ import com.jrlepere.hotspot_back_end_interface.MethodCallNotification;
 public class AppController {
 
 	private Map<String, IdMethodMap> idMethodMapPerProject = new HashMap<>();
-	private Map<String, Queue<String>> methodCallLogPerProject = new HashMap<>();
+	private Map<String, Deque<String>> methodCallLogPerProject = new HashMap<>();
 	private IdGenerator idGenerator = new IdGenerator();
 
 	@RequestMapping(value = "/register-project", method = RequestMethod.GET)
@@ -43,7 +44,7 @@ public class AppController {
 		if (!idMethodMap.containsMethod(method)) {
 			idMethodMap.put(method, idGenerator.generateUniqueMethodId(projectId));
 		}
-		methodCallLogPerProject.get(projectId).add(idMethodMap.getId(method));
+		methodCallLogPerProject.get(projectId).addFirst(idMethodMap.getId(method));
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")

@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+h1 {
+    font-size: xx-large;
+    color: #f74c4c;
+    margin-bottom: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: scroll;
+    margin-top: 10px;
+    max-height: 75vh;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

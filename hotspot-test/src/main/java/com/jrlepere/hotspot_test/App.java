@@ -10,7 +10,12 @@ public class App {
 		return message + message;
 	}
 	
+	public static String echo3(String message) {
+		return message + message + message;
+	}
+	
     public static void main(String[] args) {
         echo2(echo(echo2(echo("Hello"))));
+        echo3("");
     }
 }
