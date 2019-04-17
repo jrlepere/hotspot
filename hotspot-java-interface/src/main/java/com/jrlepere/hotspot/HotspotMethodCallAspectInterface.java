@@ -13,7 +13,7 @@ import com.jrlepere.hotspot_back_end_interface.MethodCallNotification;
 
 public class HotspotMethodCallAspectInterface implements IMethodCallAspectInterface {
 
-	private static final String URL = "http://localhost:8080/";
+	private static final String URL = "http://18.212.190.238/";
 	private static final HttpClient httpClient = HttpClientBuilder.create().build();
 	private String projectId;
 	private IMethodParser methodParser;
