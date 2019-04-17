@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jrlepere.hotspot_back_end_interface.Method;
 import com.jrlepere.hotspot_back_end_interface.MethodCallNotification;
 
+@CrossOrigin
 @RestController
 public class AppController {
 
@@ -47,26 +48,22 @@ public class AppController {
 		methodCallLogPerProject.get(projectId).addFirst(idMethodMap.getId(method));
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/is-valid-project-id", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> isValidProjectId(@RequestParam String projectId) {
 		return new ResponseEntity<Boolean>(idMethodMapPerProject.containsKey(projectId), HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/method-call-log", method = RequestMethod.GET)
 	public ResponseEntity<Queue<String>> getMethodCallLog(@RequestParam String projectId) {
 		return new ResponseEntity<Queue<String>>(methodCallLogPerProject.get(projectId), HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/id-method-map", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Method>> getIdMethodMap(@RequestParam String projectId) {
 		return new ResponseEntity<Map<String, Method>>(idMethodMapPerProject.get(projectId).getIdToMethodMap(),
 				HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/method-call-counts", method = RequestMethod.GET)
 	public ResponseEntity<List<Map<String, String>>> getMethodCallCounts(@RequestParam String projectId) {
 		Map<String, Integer> methodCounter = new HashMap<>();

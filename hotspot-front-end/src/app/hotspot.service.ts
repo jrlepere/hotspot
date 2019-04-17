@@ -12,7 +12,7 @@ import { Method } from './method';
 })
 export class HotspotService {
 
-    private rootUrl = 'http://localhost:8080';
+    private rootUrl = 'http://18.212.190.238';
     private projectId = '';
 
     constructor(private httpClient: HttpClient) { }
