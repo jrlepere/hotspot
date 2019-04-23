@@ -11,16 +11,16 @@ Method call visualization tool.
 ```
 
 ## AspectJ
-MethodCallWeave.java
+MethodCallWeave.aj
 ```
-package com.jrlepere.hotspot_test;
+package xxx.yyy.zzz;
 
 import com.jrlepere.hotspot.*;
 
 public aspect MethodCallWeave {
 	
 	private static final IMethodCallAspectInterface METHOD_CALL_HANDLER =
-			new HotspotMethodCallAspectInterface("888beb9d-36d8-468e-bef4-b3c8e11aa5b0");
+			new HotspotMethodCallAspectInterface("projec-id");
 	
 	pointcut traceMethods():
 		execution(* *(..)) && !cflow(within(MethodCallWeave));
