@@ -8,6 +8,16 @@ Method call visualization tool.
   <artifactId>hotspot</artifactId>
   <version>0.0.0-SNAPSHOT-jar-with-dependencies</version>
 </dependency>
+<dependency>
+  <groupId>org.aspectj</groupId>
+  <artifactId>aspectjrt</artifactId>
+  <version>1.9.2</version>
+</dependency>
+<dependency>
+  <groupId>org.aspectj</groupId>
+  <artifactId>aspectjweaver</artifactId>
+  <version>1.9.2</version>
+</dependency>
 ```
 
 ## AspectJ
